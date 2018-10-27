@@ -1,0 +1,104 @@
+buildscript {
+    ext {
+        vertx_jooq_version = '4.0.0'
+        postgresql_version = '42.2.2'
+    }
+
+    repositories {
+        mavenLocal()
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath "io.github.jklingsporn:vertx-jooq-generate:$vertx_jooq_version"
+        classpath "org.postgresql:postgresql:$postgresql_version"
+    }
+}
+
+import groovy.xml.MarkupBuilder
+import org.jooq.codegen.GenerationTool
+import javax.xml.bind.JAXB
+
+group = 'com.swanpipe'
+description ="""
+SwanPipe JOOQ Generated RX DAOs :${project.name}"""
+
+apply plugin: 'java'
+apply plugin: 'maven'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+    jcenter()
+    mavenLocal()
+}
+
+dependencies {
+    compile "io.github.jklingsporn:vertx-jooq-rx-reactive:$vertx_jooq_version"
+}
+
+jar {
+    /**
+     *  Create a fat jar
+     */
+    from {
+        configurations.compile.collect { it.isDirectory() ? it : zipTree( it ) }
+    }
+}
+
+test {
+    useJUnitPlatform()
+
+    testLogging {
+        events "passed", "skipped", "failed"
+    }
+}
+
+task jooqGenerate {
+    doLast() {
+        def writer = new StringWriter()
+        new MarkupBuilder(writer)
+                .configuration('xmlns': 'http://www.jooq.org/xsd/jooq-codegen-3.11.0.xsd') {
+            jdbc {
+                driver('org.postgresql.Driver')
+                url('jdbc:postgresql://localhost:5432/postgres')
+                user('postgres')
+                password('password')
+            }
+            generator {
+                name('io.github.jklingsporn.vertx.jooq.generate.rx.RXReactiveVertxGenerator')
+                database {
+                    name('org.jooq.meta.postgres.PostgresDatabase')
+                    include('.*')
+                    excludes('schema_version')
+                    inputSchema('public')
+                    includeTables(true)
+                    includeRoutines(true)
+                    includePackages(false)
+                    includeUDTs(true)
+                    includeSequences(true)
+                }
+                generate([:]) {
+                    deprecated(false)
+                    records(false)
+                    interfaces(true)
+                    fluentSetters(true)
+                    pojos(true)
+                    daos(true)
+                }
+                target() {
+                    packageName('com.swanpipe.jooq.rx')
+                    directory("$projectDir/src/main/java")
+                }
+                strategy {
+                   name('io.github.jklingsporn.vertx.jooq.generate.VertxGeneratorStrategy')
+                }
+            }
+        }
+        println( writer.toString() )
+        GenerationTool.generate(
+                JAXB.unmarshal(new StringReader(writer.toString()), org.jooq.meta.jaxb.Configuration.class)
+        )
+    }
+}
