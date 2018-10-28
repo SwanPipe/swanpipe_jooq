@@ -7,6 +7,9 @@ package com.swanpipe.jooq.rx.tables.interfaces;
 import io.github.jklingsporn.vertx.jooq.shared.internal.VertxPojo;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
+import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
 
 import javax.annotation.Generated;
 
@@ -54,6 +57,16 @@ public interface IPersona extends VertxPojo, Serializable {
      */
     public String getDisplayName();
 
+    /**
+     * Setter for <code>public.persona.created</code>.
+     */
+    public IPersona setCreated(Timestamp value);
+
+    /**
+     * Getter for <code>public.persona.created</code>.
+     */
+    public Timestamp getCreated();
+
     // -------------------------------------------------------------------------
     // FROM and INTO
     // -------------------------------------------------------------------------
@@ -73,6 +86,7 @@ public interface IPersona extends VertxPojo, Serializable {
         setId(json.getString("id"));
         setAccountId(json.getInteger("account_id"));
         setDisplayName(json.getString("display_name"));
+        setCreated(Timestamp.from(OffsetDateTime.parse(json.getString("created")).toInstant()));
         return this;
     }
 
@@ -83,6 +97,7 @@ public interface IPersona extends VertxPojo, Serializable {
         json.put("id",getId());
         json.put("account_id",getAccountId());
         json.put("display_name",getDisplayName());
+        json.put("created",OffsetDateTime.ofInstant(getCreated().toInstant(), ZoneOffset.UTC));
         return json;
     }
 

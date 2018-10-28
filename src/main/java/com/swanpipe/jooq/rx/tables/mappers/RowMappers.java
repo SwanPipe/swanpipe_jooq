@@ -1,6 +1,8 @@
 package com.swanpipe.jooq.rx.tables.mappers;
 
 import io.reactiverse.pgclient.Row;
+
+import java.sql.Timestamp;
 import java.util.function.Function;
 
 public class RowMappers {
@@ -12,6 +14,7 @@ public class RowMappers {
             com.swanpipe.jooq.rx.tables.pojos.Account pojo = new com.swanpipe.jooq.rx.tables.pojos.Account();
             pojo.setId(row.getInteger("id"));
             pojo.setEnabled(row.getBoolean("enabled"));
+            pojo.setCreated(Timestamp.from(row.getOffsetDateTime( "created" ).toInstant()));
             return pojo;
         };
     }
@@ -26,7 +29,7 @@ public class RowMappers {
             pojo.setScript(row.getString("script"));
             pojo.setChecksum(row.getInteger("checksum"));
             pojo.setInstalledBy(row.getString("installed_by"));
-            // Omitting unrecognized type DataType [ t=timestamp without time zone; p=0; s=0; u="pg_catalog"."timestamp"; j=null ] (java.sql.Timestamp) for column installed_on!
+            pojo.setInstalledOn(Timestamp.from(row.getOffsetDateTime("installed_on").toInstant()));
             pojo.setExecutionTime(row.getInteger("execution_time"));
             pojo.setSuccess(row.getBoolean("success"));
             return pojo;
@@ -40,8 +43,9 @@ public class RowMappers {
             pojo.setAccountId(row.getInteger("account_id"));
             pojo.setPassword(row.getString("password"));
             pojo.setEnabled(row.getBoolean("enabled"));
-            // Omitting unrecognized type DataType [ t=timestamp without time zone; p=0; s=0; u="pg_catalog"."timestamp"; j=null ] (java.sql.Timestamp) for column last_successful_login!
-            // Omitting unrecognized type DataType [ t=timestamp without time zone; p=0; s=0; u="pg_catalog"."timestamp"; j=null ] (java.sql.Timestamp) for column last_failed_login!
+            pojo.setCreated(Timestamp.from(row.getOffsetDateTime( "created" ).toInstant()));
+            pojo.setLastSuccessfulLogin(Timestamp.from(row.getOffsetDateTime("last_successful_login").toInstant()));
+            pojo.setLastFailedLogin(Timestamp.from(row.getOffsetDateTime("last_failed_login").toInstant()));
             return pojo;
         };
     }
@@ -52,6 +56,7 @@ public class RowMappers {
             pojo.setId(row.getString("id"));
             pojo.setAccountId(row.getInteger("account_id"));
             pojo.setDisplayName(row.getString("display_name"));
+            pojo.setCreated(Timestamp.from(row.getOffsetDateTime( "created" ).toInstant()));
             return pojo;
         };
     }

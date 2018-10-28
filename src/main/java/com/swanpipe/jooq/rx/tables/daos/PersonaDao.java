@@ -9,6 +9,7 @@ import com.swanpipe.jooq.rx.tables.records.PersonaRecord;
 
 import io.github.jklingsporn.vertx.jooq.shared.reactive.AbstractReactiveVertxDAO;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import javax.annotation.Generated;
@@ -60,6 +61,13 @@ public class PersonaDao extends AbstractReactiveVertxDAO<PersonaRecord, com.swan
      */
     public Single<List<com.swanpipe.jooq.rx.tables.pojos.Persona>> findManyByDisplayName(List<String> values) {
         return findManyByCondition(Persona.PERSONA.DISPLAY_NAME.in(values));
+    }
+
+    /**
+     * Find records that have <code>created IN (values)</code> asynchronously
+     */
+    public Single<List<com.swanpipe.jooq.rx.tables.pojos.Persona>> findManyByCreated(List<Timestamp> values) {
+        return findManyByCondition(Persona.PERSONA.CREATED.in(values));
     }
 
     @Override

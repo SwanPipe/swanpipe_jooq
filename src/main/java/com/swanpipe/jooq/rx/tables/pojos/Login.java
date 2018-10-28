@@ -26,12 +26,13 @@ import javax.annotation.Generated;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Login implements VertxPojo, ILogin {
 
-    private static final long serialVersionUID = 1889123819;
+    private static final long serialVersionUID = 204513425;
 
     private String    id;
     private Integer   accountId;
     private String    password;
     private Boolean   enabled;
+    private Timestamp created;
     private Timestamp lastSuccessfulLogin;
     private Timestamp lastFailedLogin;
 
@@ -42,6 +43,7 @@ public class Login implements VertxPojo, ILogin {
         this.accountId = value.getAccountId();
         this.password = value.getPassword();
         this.enabled = value.getEnabled();
+        this.created = value.getCreated();
         this.lastSuccessfulLogin = value.getLastSuccessfulLogin();
         this.lastFailedLogin = value.getLastFailedLogin();
     }
@@ -51,6 +53,7 @@ public class Login implements VertxPojo, ILogin {
         Integer   accountId,
         String    password,
         Boolean   enabled,
+        Timestamp created,
         Timestamp lastSuccessfulLogin,
         Timestamp lastFailedLogin
     ) {
@@ -58,6 +61,7 @@ public class Login implements VertxPojo, ILogin {
         this.accountId = accountId;
         this.password = password;
         this.enabled = enabled;
+        this.created = created;
         this.lastSuccessfulLogin = lastSuccessfulLogin;
         this.lastFailedLogin = lastFailedLogin;
     }
@@ -107,6 +111,17 @@ public class Login implements VertxPojo, ILogin {
     }
 
     @Override
+    public Timestamp getCreated() {
+        return this.created;
+    }
+
+    @Override
+    public Login setCreated(Timestamp created) {
+        this.created = created;
+        return this;
+    }
+
+    @Override
     public Timestamp getLastSuccessfulLogin() {
         return this.lastSuccessfulLogin;
     }
@@ -136,6 +151,7 @@ public class Login implements VertxPojo, ILogin {
         sb.append(", ").append(accountId);
         sb.append(", ").append(password);
         sb.append(", ").append(enabled);
+        sb.append(", ").append(created);
         sb.append(", ").append(lastSuccessfulLogin);
         sb.append(", ").append(lastFailedLogin);
 
@@ -156,6 +172,7 @@ public class Login implements VertxPojo, ILogin {
         setAccountId(from.getAccountId());
         setPassword(from.getPassword());
         setEnabled(from.getEnabled());
+        setCreated(from.getCreated());
         setLastSuccessfulLogin(from.getLastSuccessfulLogin());
         setLastFailedLogin(from.getLastFailedLogin());
     }

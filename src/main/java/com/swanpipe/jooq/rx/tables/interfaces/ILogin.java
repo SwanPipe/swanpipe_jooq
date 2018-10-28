@@ -8,6 +8,8 @@ import io.github.jklingsporn.vertx.jooq.shared.internal.VertxPojo;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
 
 import javax.annotation.Generated;
 
@@ -66,6 +68,16 @@ public interface ILogin extends VertxPojo, Serializable {
     public Boolean getEnabled();
 
     /**
+     * Setter for <code>public.login.created</code>.
+     */
+    public ILogin setCreated(Timestamp value);
+
+    /**
+     * Getter for <code>public.login.created</code>.
+     */
+    public Timestamp getCreated();
+
+    /**
      * Setter for <code>public.login.last_successful_login</code>.
      */
     public ILogin setLastSuccessfulLogin(Timestamp value);
@@ -105,8 +117,9 @@ public interface ILogin extends VertxPojo, Serializable {
         setAccountId(json.getInteger("account_id"));
         setPassword(json.getString("password"));
         setEnabled(json.getBoolean("enabled"));
-        // Omitting unrecognized type java.sql.Timestamp for column last_successful_login!
-        // Omitting unrecognized type java.sql.Timestamp for column last_failed_login!
+        setCreated(Timestamp.from(OffsetDateTime.parse(json.getString("created")).toInstant()));
+        setLastSuccessfulLogin(Timestamp.from(OffsetDateTime.parse(json.getString("last_successful_login")).toInstant()));
+        setLastFailedLogin(Timestamp.from(OffsetDateTime.parse(json.getString("last_failed_login")).toInstant()));
         return this;
     }
 
@@ -118,8 +131,9 @@ public interface ILogin extends VertxPojo, Serializable {
         json.put("account_id",getAccountId());
         json.put("password",getPassword());
         json.put("enabled",getEnabled());
-        // Omitting unrecognized type java.sql.Timestamp for column last_successful_login!
-        // Omitting unrecognized type java.sql.Timestamp for column last_failed_login!
+        json.put("created",OffsetDateTime.ofInstant(getCreated().toInstant(), ZoneOffset.UTC));
+        json.put("last_successful_login",OffsetDateTime.ofInstant(getLastSuccessfulLogin().toInstant(), ZoneOffset.UTC));
+        json.put("last_failed_login",OffsetDateTime.ofInstant(getLastFailedLogin().toInstant(), ZoneOffset.UTC));
         return json;
     }
 

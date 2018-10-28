@@ -9,6 +9,7 @@ import com.swanpipe.jooq.rx.Keys;
 import com.swanpipe.jooq.rx.Public;
 import com.swanpipe.jooq.rx.tables.records.AccountRecord;
 
+import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.List;
 
@@ -41,7 +42,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Account extends TableImpl<AccountRecord> {
 
-    private static final long serialVersionUID = 1739720674;
+    private static final long serialVersionUID = 333708213;
 
     /**
      * The reference instance of <code>public.account</code>
@@ -65,6 +66,11 @@ public class Account extends TableImpl<AccountRecord> {
      * The column <code>public.account.enabled</code>.
      */
     public final TableField<AccountRecord, Boolean> ENABLED = createField("enabled", org.jooq.impl.SQLDataType.BOOLEAN.defaultValue(org.jooq.impl.DSL.field("true", org.jooq.impl.SQLDataType.BOOLEAN)), this, "");
+
+    /**
+     * The column <code>public.account.created</code>.
+     */
+    public final TableField<AccountRecord, Timestamp> CREATED = createField("created", org.jooq.impl.SQLDataType.TIMESTAMP.defaultValue(org.jooq.impl.DSL.field("now()", org.jooq.impl.SQLDataType.TIMESTAMP)), this, "");
 
     /**
      * Create a <code>public.account</code> table reference

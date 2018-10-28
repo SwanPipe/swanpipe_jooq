@@ -41,7 +41,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Login extends TableImpl<LoginRecord> {
 
-    private static final long serialVersionUID = -6065787;
+    private static final long serialVersionUID = 1983756808;
 
     /**
      * The reference instance of <code>public.login</code>
@@ -75,6 +75,11 @@ public class Login extends TableImpl<LoginRecord> {
      * The column <code>public.login.enabled</code>.
      */
     public final TableField<LoginRecord, Boolean> ENABLED = createField("enabled", org.jooq.impl.SQLDataType.BOOLEAN.defaultValue(org.jooq.impl.DSL.field("true", org.jooq.impl.SQLDataType.BOOLEAN)), this, "");
+
+    /**
+     * The column <code>public.login.created</code>.
+     */
+    public final TableField<LoginRecord, Timestamp> CREATED = createField("created", org.jooq.impl.SQLDataType.TIMESTAMP.defaultValue(org.jooq.impl.DSL.field("now()", org.jooq.impl.SQLDataType.TIMESTAMP)), this, "");
 
     /**
      * The column <code>public.login.last_successful_login</code>.

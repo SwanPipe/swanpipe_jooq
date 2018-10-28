@@ -7,6 +7,9 @@ package com.swanpipe.jooq.rx.tables.interfaces;
 import io.github.jklingsporn.vertx.jooq.shared.internal.VertxPojo;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
+import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
 
 import javax.annotation.Generated;
 
@@ -44,6 +47,16 @@ public interface IAccount extends VertxPojo, Serializable {
      */
     public Boolean getEnabled();
 
+    /**
+     * Setter for <code>public.account.created</code>.
+     */
+    public IAccount setCreated(Timestamp value);
+
+    /**
+     * Getter for <code>public.account.created</code>.
+     */
+    public Timestamp getCreated();
+
     // -------------------------------------------------------------------------
     // FROM and INTO
     // -------------------------------------------------------------------------
@@ -62,6 +75,7 @@ public interface IAccount extends VertxPojo, Serializable {
     public default IAccount fromJson(io.vertx.core.json.JsonObject json) {
         setId(json.getInteger("id"));
         setEnabled(json.getBoolean("enabled"));
+        setCreated(Timestamp.from(OffsetDateTime.parse(json.getString("created")).toInstant()));
         return this;
     }
 
@@ -71,6 +85,7 @@ public interface IAccount extends VertxPojo, Serializable {
         io.vertx.core.json.JsonObject json = new io.vertx.core.json.JsonObject();
         json.put("id",getId());
         json.put("enabled",getEnabled());
+        json.put("created",OffsetDateTime.ofInstant(getCreated().toInstant(), ZoneOffset.UTC));
         return json;
     }
 

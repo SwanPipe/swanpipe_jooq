@@ -8,6 +8,8 @@ import com.swanpipe.jooq.rx.tables.interfaces.IAccount;
 
 import io.github.jklingsporn.vertx.jooq.shared.internal.VertxPojo;
 
+import java.sql.Timestamp;
+
 import javax.annotation.Generated;
 
 
@@ -24,24 +26,28 @@ import javax.annotation.Generated;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Account implements VertxPojo, IAccount {
 
-    private static final long serialVersionUID = 1161054837;
+    private static final long serialVersionUID = 258004045;
 
-    private Integer id;
-    private Boolean enabled;
+    private Integer   id;
+    private Boolean   enabled;
+    private Timestamp created;
 
     public Account() {}
 
     public Account(IAccount value) {
         this.id = value.getId();
         this.enabled = value.getEnabled();
+        this.created = value.getCreated();
     }
 
     public Account(
-        Integer id,
-        Boolean enabled
+        Integer   id,
+        Boolean   enabled,
+        Timestamp created
     ) {
         this.id = id;
         this.enabled = enabled;
+        this.created = created;
     }
 
     @Override
@@ -67,11 +73,23 @@ public class Account implements VertxPojo, IAccount {
     }
 
     @Override
+    public Timestamp getCreated() {
+        return this.created;
+    }
+
+    @Override
+    public Account setCreated(Timestamp created) {
+        this.created = created;
+        return this;
+    }
+
+    @Override
     public String toString() {
         StringBuilder sb = new StringBuilder("Account (");
 
         sb.append(id);
         sb.append(", ").append(enabled);
+        sb.append(", ").append(created);
 
         sb.append(")");
         return sb.toString();
@@ -88,6 +106,7 @@ public class Account implements VertxPojo, IAccount {
     public void from(IAccount from) {
         setId(from.getId());
         setEnabled(from.getEnabled());
+        setCreated(from.getCreated());
     }
 
     /**

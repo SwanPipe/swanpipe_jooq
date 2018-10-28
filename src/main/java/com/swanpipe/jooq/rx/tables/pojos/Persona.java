@@ -8,6 +8,8 @@ import com.swanpipe.jooq.rx.tables.interfaces.IPersona;
 
 import io.github.jklingsporn.vertx.jooq.shared.internal.VertxPojo;
 
+import java.sql.Timestamp;
+
 import javax.annotation.Generated;
 
 
@@ -24,11 +26,12 @@ import javax.annotation.Generated;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Persona implements VertxPojo, IPersona {
 
-    private static final long serialVersionUID = 408262269;
+    private static final long serialVersionUID = 817710526;
 
-    private String  id;
-    private Integer accountId;
-    private String  displayName;
+    private String    id;
+    private Integer   accountId;
+    private String    displayName;
+    private Timestamp created;
 
     public Persona() {}
 
@@ -36,16 +39,19 @@ public class Persona implements VertxPojo, IPersona {
         this.id = value.getId();
         this.accountId = value.getAccountId();
         this.displayName = value.getDisplayName();
+        this.created = value.getCreated();
     }
 
     public Persona(
-        String  id,
-        Integer accountId,
-        String  displayName
+        String    id,
+        Integer   accountId,
+        String    displayName,
+        Timestamp created
     ) {
         this.id = id;
         this.accountId = accountId;
         this.displayName = displayName;
+        this.created = created;
     }
 
     @Override
@@ -82,12 +88,24 @@ public class Persona implements VertxPojo, IPersona {
     }
 
     @Override
+    public Timestamp getCreated() {
+        return this.created;
+    }
+
+    @Override
+    public Persona setCreated(Timestamp created) {
+        this.created = created;
+        return this;
+    }
+
+    @Override
     public String toString() {
         StringBuilder sb = new StringBuilder("Persona (");
 
         sb.append(id);
         sb.append(", ").append(accountId);
         sb.append(", ").append(displayName);
+        sb.append(", ").append(created);
 
         sb.append(")");
         return sb.toString();
@@ -105,6 +123,7 @@ public class Persona implements VertxPojo, IPersona {
         setId(from.getId());
         setAccountId(from.getAccountId());
         setDisplayName(from.getDisplayName());
+        setCreated(from.getCreated());
     }
 
     /**

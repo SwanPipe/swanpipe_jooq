@@ -9,6 +9,7 @@ import com.swanpipe.jooq.rx.tables.records.AccountRecord;
 
 import io.github.jklingsporn.vertx.jooq.shared.reactive.AbstractReactiveVertxDAO;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import javax.annotation.Generated;
@@ -53,6 +54,13 @@ public class AccountDao extends AbstractReactiveVertxDAO<AccountRecord, com.swan
      */
     public Single<List<com.swanpipe.jooq.rx.tables.pojos.Account>> findManyByEnabled(List<Boolean> values) {
         return findManyByCondition(Account.ACCOUNT.ENABLED.in(values));
+    }
+
+    /**
+     * Find records that have <code>created IN (values)</code> asynchronously
+     */
+    public Single<List<com.swanpipe.jooq.rx.tables.pojos.Account>> findManyByCreated(List<Timestamp> values) {
+        return findManyByCondition(Account.ACCOUNT.CREATED.in(values));
     }
 
     @Override

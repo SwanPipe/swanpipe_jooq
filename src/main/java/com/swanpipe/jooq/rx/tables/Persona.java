@@ -9,6 +9,7 @@ import com.swanpipe.jooq.rx.Keys;
 import com.swanpipe.jooq.rx.Public;
 import com.swanpipe.jooq.rx.tables.records.PersonaRecord;
 
+import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.List;
 
@@ -40,7 +41,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Persona extends TableImpl<PersonaRecord> {
 
-    private static final long serialVersionUID = -161574042;
+    private static final long serialVersionUID = -1759530323;
 
     /**
      * The reference instance of <code>public.persona</code>
@@ -69,6 +70,11 @@ public class Persona extends TableImpl<PersonaRecord> {
      * The column <code>public.persona.display_name</code>.
      */
     public final TableField<PersonaRecord, String> DISPLAY_NAME = createField("display_name", org.jooq.impl.SQLDataType.CLOB, this, "");
+
+    /**
+     * The column <code>public.persona.created</code>.
+     */
+    public final TableField<PersonaRecord, Timestamp> CREATED = createField("created", org.jooq.impl.SQLDataType.TIMESTAMP.defaultValue(org.jooq.impl.DSL.field("now()", org.jooq.impl.SQLDataType.TIMESTAMP)), this, "");
 
     /**
      * Create a <code>public.persona</code> table reference

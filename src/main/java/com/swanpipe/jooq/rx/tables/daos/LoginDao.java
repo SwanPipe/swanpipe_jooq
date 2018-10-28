@@ -71,6 +71,13 @@ public class LoginDao extends AbstractReactiveVertxDAO<LoginRecord, com.swanpipe
     }
 
     /**
+     * Find records that have <code>created IN (values)</code> asynchronously
+     */
+    public Single<List<com.swanpipe.jooq.rx.tables.pojos.Login>> findManyByCreated(List<Timestamp> values) {
+        return findManyByCondition(Login.LOGIN.CREATED.in(values));
+    }
+
+    /**
      * Find records that have <code>last_successful_login IN (values)</code> asynchronously
      */
     public Single<List<com.swanpipe.jooq.rx.tables.pojos.Login>> findManyByLastSuccessfulLogin(List<Timestamp> values) {
